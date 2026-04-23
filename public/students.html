@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Students — EduManage Pro</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="wrapper">
+  <!-- SIDEBAR -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+      <span class="brand-name">EduManage</span>
+    </div>
+    <div class="sidebar-nav">
+      <div class="nav-label">Main</div>
+      <ul>
+        <li class="nav-item"><a href="dashboard.html"><span class="nav-icon"><i class="fa-solid fa-house"></i></span> Dashboard</a></li>
+        <li class="nav-item"><a href="branches.html"><span class="nav-icon"><i class="fa-solid fa-code-branch"></i></span> Branches</a></li>
+        <li class="nav-item active"><a href="students.html"><span class="nav-icon"><i class="fa-solid fa-user-graduate"></i></span> Students</a></li>
+        <li class="nav-item"><a href="teachers.html"><span class="nav-icon"><i class="fa-solid fa-chalkboard-user"></i></span> Teachers</a></li>
+        <li class="nav-item"><a href="parents.html"><span class="nav-icon"><i class="fa-solid fa-user-group"></i></span> Parents</a></li>
+        <li class="nav-item"><a href="staff.html"><span class="nav-icon"><i class="fa-solid fa-id-badge"></i></span> Staff</a></li>
+      </ul>
+      <div class="nav-label">Academics</div>
+      <ul>
+        <li class="nav-item"><a href="classes.html"><span class="nav-icon"><i class="fa-solid fa-layer-group"></i></span> Classes</a></li>
+        <li class="nav-item"><a href="timetable.html"><span class="nav-icon"><i class="fa-solid fa-table-cells"></i></span> Timetable</a></li>
+        <li class="nav-item"><a href="exams.html"><span class="nav-icon"><i class="fa-solid fa-file-pen"></i></span> Exams</a></li>
+        <li class="nav-item"><a href="homework.html"><span class="nav-icon"><i class="fa-solid fa-book-open"></i></span> Homework</a></li>
+        <li class="nav-item"><a href="live-classes.html"><span class="nav-icon"><i class="fa-solid fa-video"></i></span> Live Classes</a></li>
+      </ul>
+      <div class="nav-label">Operations</div>
+      <ul>
+        <li class="nav-item"><a href="scanner.html"><span class="nav-icon"><i class="fa-solid fa-qrcode"></i></span> Attendance Scanner</a></li>
+        <li class="nav-item"><a href="attendance.html"><span class="nav-icon"><i class="fa-solid fa-calendar-check"></i></span> Attendance</a></li>
+        <li class="nav-item"><a href="fees.html"><span class="nav-icon"><i class="fa-solid fa-money-bill-wave"></i></span> Fees</a></li>
+        <li class="nav-item"><a href="accounting.html"><span class="nav-icon"><i class="fa-solid fa-chart-line"></i></span> Accounting</a></li>
+        <li class="nav-item"><a href="payroll.html"><span class="nav-icon"><i class="fa-solid fa-wallet"></i></span> Payroll</a></li>
+        <li class="nav-item"><a href="library.html"><span class="nav-icon"><i class="fa-solid fa-book"></i></span> Library</a></li>
+        <li class="nav-item"><a href="transport.html"><span class="nav-icon"><i class="fa-solid fa-bus"></i></span> Transport</a></li>
+      </ul>
+      <div class="nav-label">Admin</div>
+      <ul>
+        <li class="nav-item"><a href="reports.html"><span class="nav-icon"><i class="fa-solid fa-chart-bar"></i></span> Reports</a></li>
+        <li class="nav-item"><a href="settings.html"><span class="nav-icon"><i class="fa-solid fa-gear"></i></span> Settings</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-footer">
+      <img src="https://ui-avatars.com/api/?name=Super+Admin&background=6c63ff&color=fff" class="avatar" alt="Admin">
+      <div class="user-info"><div class="user-name">Super Admin</div><div class="user-role">All Branches</div></div>
+    </div>
+  </nav>
+
+  <div class="main-panel">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="topbar-btn" id="sidebarToggle"><i class="fa-solid fa-bars"></i></button>
+        <div class="breadcrumb"><a href="dashboard.html"><i class="fa-solid fa-house"></i></a> <i class="fa-solid fa-chevron-right" style="font-size:10px;"></i> <span>Students</span></div>
+      </div>
+      <div class="topbar-right">
+        <div class="search-wrap"><i class="fa-solid fa-search" style="color:var(--text-muted);font-size:13px;"></i><input type="text" id="searchInput" placeholder="Search students..."></div>
+        <button class="topbar-btn notif-btn"><i class="fa-regular fa-bell"></i><span class="notif-dot"></span></button>
+        <img src="https://ui-avatars.com/api/?name=Super+Admin&background=6c63ff&color=fff" class="topbar-avatar" alt="Admin">
+        <a href="login.html" class="topbar-btn"><i class="fa-solid fa-right-from-bracket"></i></a>
+      </div>
+    </header>
+
+    <main class="content">
+      <div class="page-header">
+        <div class="page-title-wrap"><h1>Student Management</h1><p>Manage all student records across branches</p></div>
+        <div class="page-actions">
+          <button class="btn btn-outline btn-sm"><i class="fa-solid fa-file-export"></i> Export</button>
+          <button class="btn btn-outline btn-sm"><i class="fa-solid fa-file-import"></i> Import</button>
+          <button class="btn btn-primary" id="openAddStudent"><i class="fa-solid fa-plus"></i> Add Student</button>
+        </div>
+      </div>
+
+      <!-- Filters -->
+      <div class="card mb-24">
+        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;">
+          <div style="flex:1;min-width:140px;">
+            <label class="form-label">Branch</label>
+            <select class="form-control" id="filterBranch">
+              <option value="">All Branches</option>
+              <option>Icon Academy</option>
+              <option>Icon Institute</option>
+            </select>
+          </div>
+          <div style="flex:1;min-width:140px;">
+            <label class="form-label">Class</label>
+            <select class="form-control" id="filterClass">
+              <option value="">All Classes</option>
+              <option>Class 6</option><option>Class 7</option><option>Class 8</option>
+              <option>Class 9</option><option>Class 10</option>
+            </select>
+          </div>
+          <div style="flex:1;min-width:140px;">
+            <label class="form-label">Section</label>
+            <select class="form-control" id="filterSection">
+              <option value="">All Sections</option>
+              <option>A</option><option>B</option><option>C</option>
+            </select>
+          </div>
+          <div style="flex:1;min-width:140px;">
+            <label class="form-label">Status</label>
+            <select class="form-control" id="filterStatus">
+              <option value="">All Status</option>
+              <option>Active</option><option>Inactive</option><option>Pending</option>
+            </select>
+          </div>
+          <button class="btn btn-primary" onclick="applyFilters()"><i class="fa-solid fa-filter"></i> Filter</button>
+          <button class="btn btn-outline" onclick="clearFilters()"><i class="fa-solid fa-rotate"></i> Reset</button>
+        </div>
+      </div>
+
+      <!-- Student Table -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">All Students <span class="badge badge-purple" style="margin-left:8px;" id="countBadge">248</span></div>
+          <div style="display:flex;gap:8px;">
+            <button class="btn btn-outline btn-sm active" id="viewTable" onclick="setView('table')"><i class="fa-solid fa-list"></i></button>
+            <button class="btn btn-outline btn-sm" id="viewGrid" onclick="setView('grid')"><i class="fa-solid fa-grip"></i></button>
+          </div>
+        </div>
+        <div class="table-wrap" id="tableView">
+          <table id="studentsTable">
+            <thead>
+              <tr>
+                <th><input type="checkbox" id="selectAll" style="accent-color:var(--accent)"></th>
+                <th>Student</th>
+                <th>Admission No.</th>
+                <th>Class</th>
+                <th>Branch</th>
+                <th>Parent</th>
+                <th>Fee Status</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="studentsBody">
+              <!-- JS populated -->
+            </tbody>
+          </table>
+        </div>
+        <!-- Grid view -->
+        <div id="gridView" style="display:none;"></div>
+
+        <!-- Pagination -->
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:16px;flex-wrap:wrap;gap:10px;">
+          <div style="font-size:12px;color:var(--text-muted);">Showing <strong>1–10</strong> of <strong>248</strong> students</div>
+          <div style="display:flex;gap:6px;">
+            <button class="btn btn-outline btn-sm"><i class="fa-solid fa-chevron-left"></i></button>
+            <button class="btn btn-primary btn-sm">1</button>
+            <button class="btn btn-outline btn-sm">2</button>
+            <button class="btn btn-outline btn-sm">3</button>
+            <button class="btn btn-outline btn-sm">...</button>
+            <button class="btn btn-outline btn-sm">25</button>
+            <button class="btn btn-outline btn-sm"><i class="fa-solid fa-chevron-right"></i></button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ADD STUDENT MODAL -->
+<div class="modal-overlay" id="addStudentModal">
+  <div class="modal" style="max-width:720px;">
+    <div class="modal-header">
+      <h3><i class="fa-solid fa-user-plus" style="color:var(--accent);margin-right:8px;"></i>Add New Student</h3>
+      <button class="modal-close" onclick="closeModal('addStudentModal')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab(this,'tab-personal')">Personal Info</button>
+        <button class="tab-btn" onclick="switchTab(this,'tab-academic')">Academic Info</button>
+        <button class="tab-btn" onclick="switchTab(this,'tab-parent')">Parent Info</button>
+      </div>
+      <div id="tab-personal" class="tab-pane active">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div class="form-group"><label class="form-label">Full Name *</label><input class="form-control" placeholder="e.g. Arif Hossain"></div>
+          <div class="form-group"><label class="form-label">Date of Birth *</label><input type="date" class="form-control"></div>
+          <div class="form-group"><label class="form-label">Gender *</label>
+            <select class="form-control"><option>Male</option><option>Female</option><option>Other</option></select>
+          </div>
+          <div class="form-group"><label class="form-label">Blood Group</label>
+            <select class="form-control"><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>O+</option><option>O-</option><option>AB+</option><option>AB-</option></select>
+          </div>
+          <div class="form-group"><label class="form-label">Phone</label><input class="form-control" placeholder="+880..."></div>
+          <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-control" placeholder="student@email.com"></div>
+          <div class="form-group" style="grid-column:span 2;"><label class="form-label">Address</label><textarea class="form-control" rows="2" placeholder="Full address..."></textarea></div>
+          <div class="form-group"><label class="form-label">Photo</label><input type="file" class="form-control" accept="image/*"></div>
+          <div class="form-group"><label class="form-label">Religion</label>
+            <select class="form-control"><option>Islam</option><option>Hinduism</option><option>Christianity</option><option>Buddhism</option><option>Other</option></select>
+          </div>
+        </div>
+      </div>
+      <div id="tab-academic" class="tab-pane">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div class="form-group"><label class="form-label">Branch *</label>
+            <select class="form-control"><option>Icon Academy</option><option>Icon Institute</option></select>
+          </div>
+          <div class="form-group"><label class="form-label">Class *</label>
+            <select class="form-control"><option>Class 6</option><option>Class 7</option><option>Class 8</option><option>Class 9</option><option>Class 10</option></select>
+          </div>
+          <div class="form-group"><label class="form-label">Section *</label>
+            <select class="form-control"><option>A</option><option>B</option><option>C</option></select>
+          </div>
+          <div class="form-group"><label class="form-label">Roll No.</label><input class="form-control" placeholder="Auto-assigned if empty"></div>
+          <div class="form-group"><label class="form-label">Admission No.</label><input class="form-control" placeholder="Auto-generated"></div>
+          <div class="form-group"><label class="form-label">Joining Date *</label><input type="date" class="form-control"></div>
+          <div class="form-group" style="grid-column:span 2;"><label class="form-label">Notes</label><textarea class="form-control" rows="2"></textarea></div>
+        </div>
+      </div>
+      <div id="tab-parent" class="tab-pane">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div class="form-group"><label class="form-label">Parent/Guardian Name *</label><input class="form-control" placeholder="Full name"></div>
+          <div class="form-group"><label class="form-label">Relation</label>
+            <select class="form-control"><option>Father</option><option>Mother</option><option>Guardian</option></select>
+          </div>
+          <div class="form-group"><label class="form-label">Parent Phone *</label><input class="form-control" placeholder="+880..."></div>
+          <div class="form-group"><label class="form-label">Parent Email</label><input type="email" class="form-control"></div>
+          <div class="form-group"><label class="form-label">Occupation</label><input class="form-control"></div>
+          <div class="form-group"><label class="form-label">National ID</label><input class="form-control"></div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('addStudentModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveStudent()"><i class="fa-solid fa-save"></i> Save Student</button>
+    </div>
+  </div>
+</div>
+
+<!-- VIEW STUDENT MODAL -->
+<div class="modal-overlay" id="viewStudentModal">
+  <div class="modal" style="max-width:560px;">
+    <div class="modal-header">
+      <h3>Student Profile</h3>
+      <button class="modal-close" onclick="closeModal('viewStudentModal')">&times;</button>
+    </div>
+    <div class="modal-body" id="viewStudentBody"></div>
+    <div class="modal-footer">
+      <button class="btn btn-outline btn-sm"><i class="fa-solid fa-print"></i> Print ID Card</button>
+      <button class="btn btn-outline" onclick="closeModal('viewStudentModal')">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast-wrap" id="toastWrap"></div>
+
+<script>
+const students = [
+  {id:1,name:'Arif Hossain',admNo:'2026-001',class:'Class 9',section:'A',branch:'Academy',parent:'Mr. Karim',feeStatus:'Paid',status:'Active',gender:'Male'},
+  {id:2,name:'Sara Khan',admNo:'2026-002',class:'Class 7',section:'B',branch:'Institute',parent:'Mrs. Nasrin',feeStatus:'Paid',status:'Active',gender:'Female'},
+  {id:3,name:'Raju Ahmed',admNo:'2026-003',class:'Class 10',section:'A',branch:'Academy',parent:'Mr. Ahmed',feeStatus:'Due',status:'Pending',gender:'Male'},
+  {id:4,name:'Nadia Islam',admNo:'2026-004',class:'Class 6',section:'A',branch:'Institute',parent:'Mr. Islam',feeStatus:'Paid',status:'Active',gender:'Female'},
+  {id:5,name:'Tanvir Hasan',admNo:'2026-005',class:'Class 8',section:'B',branch:'Academy',parent:'Mr. Hasan',feeStatus:'Partial',status:'Active',gender:'Male'},
+  {id:6,name:'Mithila Roy',admNo:'2026-006',class:'Class 9',section:'C',branch:'Academy',parent:'Mr. Roy',feeStatus:'Paid',status:'Active',gender:'Female'},
+  {id:7,name:'Sabbir Uddin',admNo:'2026-007',class:'Class 10',section:'B',branch:'Institute',parent:'Mr. Uddin',feeStatus:'Due',status:'Inactive',gender:'Male'},
+  {id:8,name:'Priya Das',admNo:'2026-008',class:'Class 7',section:'A',branch:'Institute',parent:'Mr. Das',feeStatus:'Paid',status:'Active',gender:'Female'},
+];
+
+let currentView = 'table';
+
+function renderTable(data) {
+  const feeColors = {Paid:'badge-success',Due:'badge-danger',Partial:'badge-warning'};
+  const statusColors = {Active:'badge-success',Inactive:'badge-muted',Pending:'badge-warning'};
+  const colors = ['6c63ff','00d4aa','ff4d6d','ffc53d','38bdf8','4ade80','f472b6','fb923c'];
+  document.getElementById('studentsBody').innerHTML = data.map((s,i) => `
+    <tr>
+      <td><input type="checkbox" style="accent-color:var(--accent)"></td>
+      <td><div style="display:flex;align-items:center;gap:10px;">
+        <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(s.name)}&background=${colors[i%8]}&color=fff&size=32" class="avatar avatar-sm">
+        <div><div style="font-weight:500;font-size:13px;">${s.name}</div><div style="font-size:11px;color:var(--text-muted);">${s.gender}</div></div>
+      </div></td>
+      <td style="color:var(--text-muted);font-size:12px;">${s.admNo}</td>
+      <td>${s.class} – ${s.section}</td>
+      <td><span class="badge badge-purple">${s.branch}</span></td>
+      <td style="font-size:13px;">${s.parent}</td>
+      <td><span class="badge ${feeColors[s.feeStatus]}">${s.feeStatus}</span></td>
+      <td><span class="badge ${statusColors[s.status]}">${s.status}</span></td>
+      <td>
+        <div style="display:flex;gap:6px;">
+          <button class="btn btn-outline btn-icon btn-sm" onclick="viewStudent(${s.id})" title="View"><i class="fa-solid fa-eye"></i></button>
+          <button class="btn btn-outline btn-icon btn-sm" title="Edit"><i class="fa-solid fa-pen"></i></button>
+          <button class="btn btn-danger btn-icon btn-sm" title="Delete" onclick="deleteRow(this)"><i class="fa-solid fa-trash"></i></button>
+        </div>
+      </td>
+    </tr>`).join('');
+}
+
+function renderGrid(data) {
+  const colors = ['6c63ff','00d4aa','ff4d6d','ffc53d','38bdf8','4ade80','f472b6','fb923c'];
+  const statusColors = {Active:'var(--success)',Inactive:'var(--text-muted)',Pending:'var(--warning)'};
+  document.getElementById('gridView').innerHTML = `
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;">
+      ${data.map((s,i)=>`
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:20px;text-align:center;transition:all 0.2s;">
+        <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(s.name)}&background=${colors[i%8]}&color=fff&size=64" style="width:60px;height:60px;border-radius:50%;margin-bottom:10px;border:2px solid var(${s.status==='Active'?'--accent':'--text-muted'});">
+        <div style="font-weight:600;font-size:13px;">${s.name}</div>
+        <div style="font-size:11px;color:var(--text-muted);margin:3px 0;">${s.class} – ${s.section}</div>
+        <div style="font-size:11px;color:var(--text-muted);">${s.branch}</div>
+        <div style="margin-top:10px;display:flex;gap:6px;justify-content:center;">
+          <button class="btn btn-outline btn-icon btn-sm" onclick="viewStudent(${s.id})"><i class="fa-solid fa-eye"></i></button>
+          <button class="btn btn-outline btn-icon btn-sm"><i class="fa-solid fa-pen"></i></button>
+        </div>
+      </div>`).join('')}
+    </div>`;
+}
+
+function setView(v) {
+  currentView = v;
+  document.getElementById('tableView').style.display = v==='table' ? '' : 'none';
+  document.getElementById('gridView').style.display = v==='grid' ? '' : 'none';
+  document.getElementById('viewTable').classList.toggle('btn-primary', v==='table');
+  document.getElementById('viewGrid').classList.toggle('btn-primary', v==='grid');
+  if(v==='grid') renderGrid(students);
+}
+
+function viewStudent(id) {
+  const s = students.find(x=>x.id===id);
+  const colors = {1:'6c63ff',2:'00d4aa',3:'ff4d6d',4:'ffc53d',5:'38bdf8',6:'4ade80',7:'f472b6',8:'fb923c'};
+  document.getElementById('viewStudentBody').innerHTML = `
+    <div style="text-align:center;margin-bottom:20px;">
+      <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(s.name)}&background=${colors[id]||'6c63ff'}&color=fff&size=128" style="width:80px;height:80px;border-radius:50%;border:3px solid var(--accent);">
+      <h3 style="margin-top:12px;">${s.name}</h3>
+      <p style="color:var(--text-muted);font-size:13px;">${s.admNo} &bull; ${s.class}-${s.section}</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div style="background:var(--surface2);padding:12px;border-radius:8px;"><div style="font-size:11px;color:var(--text-muted);">Branch</div><div style="font-size:13px;font-weight:600;margin-top:3px;">${s.branch}</div></div>
+      <div style="background:var(--surface2);padding:12px;border-radius:8px;"><div style="font-size:11px;color:var(--text-muted);">Gender</div><div style="font-size:13px;font-weight:600;margin-top:3px;">${s.gender}</div></div>
+      <div style="background:var(--surface2);padding:12px;border-radius:8px;"><div style="font-size:11px;color:var(--text-muted);">Parent</div><div style="font-size:13px;font-weight:600;margin-top:3px;">${s.parent}</div></div>
+      <div style="background:var(--surface2);padding:12px;border-radius:8px;"><div style="font-size:11px;color:var(--text-muted);">Fee Status</div><div style="font-size:13px;font-weight:600;margin-top:3px;color:${s.feeStatus==='Paid'?'var(--success)':'var(--danger)'};">${s.feeStatus}</div></div>
+    </div>`;
+  openModal('viewStudentModal');
+}
+
+function deleteRow(btn) {
+  if(confirm('Delete this student?')) { btn.closest('tr').remove(); showToast('Student deleted','danger'); }
+}
+
+function applyFilters() {
+  const branch = document.getElementById('filterBranch').value;
+  const cls = document.getElementById('filterClass').value;
+  const status = document.getElementById('filterStatus').value;
+  let filtered = students.filter(s =>
+    (!branch || s.branch.includes(branch.replace('Icon ',''))) &&
+    (!cls || s.class===cls) &&
+    (!status || s.status===status)
+  );
+  renderTable(filtered);
+  document.getElementById('countBadge').textContent = filtered.length;
+}
+function clearFilters() {
+  ['filterBranch','filterClass','filterSection','filterStatus'].forEach(id => document.getElementById(id).value='');
+  renderTable(students);
+  document.getElementById('countBadge').textContent = students.length;
+}
+
+document.getElementById('searchInput').addEventListener('input', function(){
+  const q = this.value.toLowerCase();
+  renderTable(students.filter(s=>s.name.toLowerCase().includes(q)||s.admNo.includes(q)));
+});
+
+document.getElementById('selectAll').addEventListener('change', function(){
+  document.querySelectorAll('tbody input[type=checkbox]').forEach(cb=>cb.checked=this.checked);
+});
+
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+document.getElementById('openAddStudent').addEventListener('click',()=>openModal('addStudentModal'));
+
+function switchTab(btn, tabId){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(tabId).classList.add('active');
+}
+
+function saveStudent(){
+  closeModal('addStudentModal');
+  showToast('Student saved successfully!','success');
+}
+
+function showToast(msg, type='success'){
+  const wrap = document.getElementById('toastWrap');
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.innerHTML = `<i class="fa-solid fa-${type==='success'?'check-circle':'times-circle'}" style="color:var(--${type==='success'?'success':'danger'});"></i> ${msg}`;
+  wrap.appendChild(toast);
+  setTimeout(()=>toast.remove(), 3500);
+}
+
+document.getElementById('sidebarToggle').addEventListener('click',()=>document.getElementById('sidebar').classList.toggle('collapsed'));
+
+// Init
+renderTable(students);
+</script>
+</body>
+</html>

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Attendance Scanner — EduManage Pro</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="wrapper">
+  <!-- SIDEBAR -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+      <span class="brand-name">EduManage</span>
+    </div>
+    <div class="sidebar-nav">
+      <div class="nav-label">Main</div>
+      <ul>
+        <li class="nav-item"><a href="dashboard.html"><span class="nav-icon"><i class="fa-solid fa-house"></i></span> Dashboard</a></li>
+        <li class="nav-item"><a href="students.html"><span class="nav-icon"><i class="fa-solid fa-user-graduate"></i></span> Students</a></li>
+        <li class="nav-item"><a href="teachers.html"><span class="nav-icon"><i class="fa-solid fa-chalkboard-user"></i></span> Teachers</a></li>
+      </ul>
+      <div class="nav-label">Operations</div>
+      <ul>
+        <li class="nav-item active"><a href="scanner.html"><span class="nav-icon"><i class="fa-solid fa-qrcode"></i></span> Attendance Scanner</a></li>
+        <li class="nav-item"><a href="attendance.html"><span class="nav-icon"><i class="fa-solid fa-calendar-check"></i></span> Attendance</a></li>
+        <li class="nav-item"><a href="fees.html"><span class="nav-icon"><i class="fa-solid fa-money-bill-wave"></i></span> Fees</a></li>
+        <li class="nav-item"><a href="payroll.html"><span class="nav-icon"><i class="fa-solid fa-wallet"></i></span> Payroll</a></li>
+        <li class="nav-item"><a href="library.html"><span class="nav-icon"><i class="fa-solid fa-book"></i></span> Library</a></li>
+      </ul>
+      <div class="nav-label">Admin</div>
+      <ul>
+        <li class="nav-item"><a href="reports.html"><span class="nav-icon"><i class="fa-solid fa-chart-bar"></i></span> Reports</a></li>
+        <li class="nav-item"><a href="settings.html"><span class="nav-icon"><i class="fa-solid fa-gear"></i></span> Settings</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-footer">
+      <img src="https://ui-avatars.com/api/?name=Super+Admin&background=6c63ff&color=fff" class="avatar" alt="Admin">
+      <div class="user-info"><div class="user-name">Super Admin</div><div class="user-role">All Branches</div></div>
+    </div>
+  </nav>
+
+  <div class="main-panel">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="topbar-btn" id="sidebarToggle"><i class="fa-solid fa-bars"></i></button>
+        <div class="breadcrumb"><a href="dashboard.html"><i class="fa-solid fa-house"></i></a> <i class="fa-solid fa-chevron-right" style="font-size:10px;"></i> <span>Attendance Scanner</span></div>
+      </div>
+      <div class="topbar-right">
+        <button class="topbar-btn notif-btn"><i class="fa-regular fa-bell"></i><span class="notif-dot"></span></button>
+        <img src="https://ui-avatars.com/api/?name=Super+Admin&background=6c63ff&color=fff" class="topbar-avatar" alt="Admin">
+        <a href="login.html" class="topbar-btn"><i class="fa-solid fa-right-from-bracket"></i></a>
+      </div>
+    </header>
+
+    <main class="content">
+      <div class="page-header">
+        <div class="page-title-wrap"><h1>Attendance Scanner</h1><p id="clockDisplay">Loading...</p></div>
+        <div class="page-actions">
+          <select class="form-control" style="min-width:160px;" id="scanBranch">
+            <option>Icon Academy</option><option>Icon Institute</option>
+          </select>
+          <select class="form-control" style="min-width:120px;" id="scanType">
+            <option value="student">Students</option>
+            <option value="teacher">Teachers</option>
+            <option value="staff">Staff</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Mode Switcher -->
+      <div style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;">
+        <button class="btn btn-primary" id="modeQR" onclick="setMode('qr')"><i class="fa-solid fa-qrcode"></i> QR Code</button>
+        <button class="btn btn-outline" id="modeFace" onclick="setMode('face')"><i class="fa-solid fa-face-smile"></i> Face Recognition</button>
+        <button class="btn btn-outline" id="modeManual" onclick="setMode('manual')"><i class="fa-solid fa-keyboard"></i> Manual</button>
+      </div>
+
+      <!-- QR / Face Mode -->
+      <div id="scannerMode">
+        <div class="scanner-grid">
+          <!-- Camera Feed -->
+          <div>
+            <div class="video-box" id="videoBox">
+              <video id="cameraFeed" autoplay playsinline style="width:100%;height:100%;object-fit:cover;"></video>
+              <canvas id="faceCanvas" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;"></canvas>
+              <div class="scan-frame">
+                <div class="corner tl"></div>
+                <div class="corner tr"></div>
+                <div class="corner bl"></div>
+                <div class="corner br"></div>
+                <div class="scan-line"></div>
+              </div>
+              <div id="cameraPlaceholder" style="display:flex;flex-direction:column;align-items:center;gap:14px;color:var(--text-muted);">
+                <i class="fa-solid fa-camera" style="font-size:48px;opacity:0.3;"></i>
+                <p style="font-size:13px;">Camera is off</p>
+                <button class="btn btn-primary" onclick="startCamera()"><i class="fa-solid fa-play"></i> Start Camera</button>
+              </div>
+            </div>
+            <div style="display:flex;gap:10px;margin-top:12px;">
+              <button class="btn btn-primary w-100" id="startCamBtn" onclick="startCamera()"><i class="fa-solid fa-play"></i> Start</button>
+              <button class="btn btn-outline w-100" onclick="stopCamera()"><i class="fa-solid fa-stop"></i> Stop</button>
+              <button class="btn btn-outline w-100" onclick="manualScan()"><i class="fa-solid fa-bolt"></i> Simulate Scan</button>
+            </div>
+          </div>
+
+          <!-- Results Panel -->
+          <div class="result-panel">
+            <!-- Last Scanned -->
+            <div class="result-card" id="lastScanned">
+              <div style="width:70px;height:70px;border-radius:50%;background:var(--glass);border:3px solid var(--border);margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:28px;color:var(--text-muted);" id="resultAvatar">
+                <i class="fa-solid fa-user"></i>
+              </div>
+              <div class="result-name" id="resultName">Waiting for scan...</div>
+              <div class="result-meta" id="resultMeta">Position camera at QR code</div>
+              <div style="margin-top:12px;" id="resultBadge"></div>
+            </div>
+
+            <!-- Stats -->
+            <div class="card" style="padding:16px;">
+              <div class="card-title" style="margin-bottom:12px;">Today's Summary</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                <div style="text-align:center;background:rgba(74,222,128,0.08);border-radius:8px;padding:12px;">
+                  <div style="font-size:24px;font-weight:800;color:var(--success);" id="countPresent">0</div>
+                  <div style="font-size:11px;color:var(--text-muted);">Present</div>
+                </div>
+                <div style="text-align:center;background:rgba(255,77,109,0.08);border-radius:8px;padding:12px;">
+                  <div style="font-size:24px;font-weight:800;color:var(--danger);" id="countAbsent">248</div>
+                  <div style="font-size:11px;color:var(--text-muted);">Not Scanned</div>
+                </div>
+              </div>
+              <div class="progress mt-12">
+                <div class="progress-bar" id="progressBar" style="width:0%;background:var(--accent2);"></div>
+              </div>
+              <div style="text-align:center;font-size:11px;color:var(--text-muted);margin-top:6px;" id="progressLabel">0 / 248 scanned</div>
+            </div>
+
+            <!-- Log -->
+            <div class="card" style="padding:16px;max-height:260px;overflow-y:auto;">
+              <div class="card-title" style="margin-bottom:10px;">Scan Log <span style="font-size:11px;color:var(--text-muted);">today</span></div>
+              <div id="scanLog">
+                <div style="text-align:center;color:var(--text-muted);font-size:13px;padding:20px;">No scans yet</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Manual Mode -->
+      <div id="manualMode" style="display:none;">
+        <div class="grid g-2">
+          <div class="card">
+            <div class="card-title mb-16">Manual Attendance Entry</div>
+            <div class="form-group">
+              <label class="form-label">Class</label>
+              <select class="form-control"><option>Class 9-A</option><option>Class 9-B</option><option>Class 10-A</option></select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Date</label>
+              <input type="date" class="form-control" id="manualDate">
+            </div>
+            <div class="table-wrap" style="margin-top:16px;">
+              <table>
+                <thead><tr><th>Student</th><th>Roll</th><th>Present</th><th>Absent</th><th>Late</th></tr></thead>
+                <tbody id="manualBody">
+                  <tr><td><div style="display:flex;align-items:center;gap:8px;"><img src="https://ui-avatars.com/api/?name=Arif+Hossain&background=6c63ff&color=fff&size=28" class="avatar avatar-sm">Arif Hossain</div></td><td>01</td>
+                    <td><input type="radio" name="att1" value="P" checked style="accent-color:var(--success)"></td>
+                    <td><input type="radio" name="att1" value="A" style="accent-color:var(--danger)"></td>
+                    <td><input type="radio" name="att1" value="L" style="accent-color:var(--warning)"></td>
+                  </tr>
+                  <tr><td><div style="display:flex;align-items:center;gap:8px;"><img src="https://ui-avatars.com/api/?name=Sara+Khan&background=00d4aa&color=fff&size=28" class="avatar avatar-sm">Sara Khan</div></td><td>02</td>
+                    <td><input type="radio" name="att2" value="P" checked style="accent-color:var(--success)"></td>
+                    <td><input type="radio" name="att2" value="A" style="accent-color:var(--danger)"></td>
+                    <td><input type="radio" name="att2" value="L" style="accent-color:var(--warning)"></td>
+                  </tr>
+                  <tr><td><div style="display:flex;align-items:center;gap:8px;"><img src="https://ui-avatars.com/api/?name=Raju+Ahmed&background=ff4d6d&color=fff&size=28" class="avatar avatar-sm">Raju Ahmed</div></td><td>03</td>
+                    <td><input type="radio" name="att3" value="P" style="accent-color:var(--success)"></td>
+                    <td><input type="radio" name="att3" value="A" checked style="accent-color:var(--danger)"></td>
+                    <td><input type="radio" name="att3" value="L" style="accent-color:var(--warning)"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer" style="padding:16px 0 0;border:none;">
+              <button class="btn btn-primary w-100" onclick="saveManual()"><i class="fa-solid fa-save"></i> Save Attendance</button>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title mb-16">Attendance Records</div>
+            <div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;">
+              <input type="date" class="form-control" style="max-width:160px;">
+              <select class="form-control" style="max-width:160px;"><option>All Classes</option><option>Class 9-A</option></select>
+              <button class="btn btn-primary btn-sm"><i class="fa-solid fa-search"></i></button>
+            </div>
+            <div class="chart-wrap" style="height:220px;"><canvas id="weekChart"></canvas></div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<div class="toast-wrap" id="toastWrap"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+// Clock
+function updateClock(){
+  const now = new Date();
+  document.getElementById('clockDisplay').textContent = now.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'}) + ' — ' + now.toLocaleTimeString();
+}
+updateClock(); setInterval(updateClock,1000);
+
+// Sidebar
+document.getElementById('sidebarToggle').addEventListener('click',()=>document.getElementById('sidebar').classList.toggle('collapsed'));
+
+// Today's date for manual
+document.getElementById('manualDate').value = new Date().toISOString().split('T')[0];
+
+// Mode
+let currentMode = 'qr';
+function setMode(m){
+  currentMode = m;
+  ['qr','face','manual'].forEach(x=>{
+    document.getElementById('mode'+x.charAt(0).toUpperCase()+x.slice(1)).className = m===x ? 'btn btn-primary' : 'btn btn-outline';
+  });
+  document.getElementById('scannerMode').style.display = m!=='manual' ? '' : 'none';
+  document.getElementById('manualMode').style.display = m==='manual' ? '' : 'none';
+}
+
+// Camera
+let stream = null;
+async function startCamera(){
+  try{
+    stream = await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}});
+    const video = document.getElementById('cameraFeed');
+    video.srcObject = stream;
+    document.getElementById('cameraPlaceholder').style.display='none';
+    document.getElementById('cameraFeed').style.display='block';
+    showToast('Camera started — scanning...','success');
+  } catch(e){
+    showToast('Camera access denied. Using simulation mode.','danger');
+  }
+}
+function stopCamera(){
+  if(stream){stream.getTracks().forEach(t=>t.stop());stream=null;}
+  document.getElementById('cameraFeed').srcObject = null;
+  document.getElementById('cameraPlaceholder').style.display='flex';
+}
+
+// Mock data
+const mockStudents = [
+  {name:'Arif Hossain',id:'2026-001',class:'Class 9-A',branch:'Academy',color:'6c63ff'},
+  {name:'Sara Khan',id:'2026-002',class:'Class 7-B',branch:'Institute',color:'00d4aa'},
+  {name:'Nadia Islam',id:'2026-004',class:'Class 6-A',branch:'Institute',color:'ffc53d'},
+  {name:'Tanvir Hasan',id:'2026-005',class:'Class 8-B',branch:'Academy',color:'38bdf8'},
+  {name:'Mithila Roy',id:'2026-006',class:'Class 9-C',branch:'Academy',color:'f472b6'},
+];
+let scanned = [];
+let total = 248;
+
+function manualScan(){
+  const available = mockStudents.filter(s=>!scanned.find(x=>x.id===s.id));
+  if(!available.length){showToast('All demo students scanned!','danger');return;}
+  const s = available[Math.floor(Math.random()*available.length)];
+  scanned.push(s);
+  const now = new Date().toLocaleTimeString();
+  // Update result card
+  document.getElementById('resultAvatar').innerHTML = `<img src="https://ui-avatars.com/api/?name=${encodeURIComponent(s.name)}&background=${s.color}&color=fff&size=128" style="width:70px;height:70px;border-radius:50%;border:3px solid var(--accent2);">`;
+  document.getElementById('resultName').textContent = s.name;
+  document.getElementById('resultMeta').textContent = `${s.id} • ${s.class} • ${s.branch}`;
+  document.getElementById('resultBadge').innerHTML = `<span class="badge badge-success"><i class="fa-solid fa-check"></i> Present — ${now}</span>`;
+  // Stats
+  const p = scanned.length;
+  document.getElementById('countPresent').textContent = p;
+  document.getElementById('countAbsent').textContent = total - p;
+  const pct = (p/total*100).toFixed(1);
+  document.getElementById('progressBar').style.width = pct+'%';
+  document.getElementById('progressLabel').textContent = `${p} / ${total} scanned (${pct}%)`;
+  // Log
+  const log = document.getElementById('scanLog');
+  if(log.querySelector('div[style]')) log.innerHTML='';
+  log.insertAdjacentHTML('afterbegin',`
+    <div class="log-item">
+      <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(s.name)}&background=${s.color}&color=fff&size=28" class="avatar avatar-sm">
+      <div style="flex:1;"><div style="font-size:13px;font-weight:500;">${s.name}</div><div style="font-size:11px;color:var(--text-muted);">${s.class}</div></div>
+      <span class="badge badge-success">${now}</span>
+    </div>`);
+  showToast(`✓ ${s.name} marked Present!`,'success');
+}
+
+function saveManual(){showToast('Manual attendance saved!','success');}
+
+function showToast(msg, type='success'){
+  const wrap = document.getElementById('toastWrap');
+  const t = document.createElement('div');
+  t.className = `toast ${type}`;
+  t.innerHTML = `<i class="fa-solid fa-${type==='success'?'check-circle':'exclamation-circle'}" style="color:var(--${type==='success'?'success':'danger'});font-size:18px;"></i> ${msg}`;
+  wrap.appendChild(t);
+  setTimeout(()=>t.remove(),3500);
+}
+
+// Week chart
+const wCtx = document.getElementById('weekChart').getContext('2d');
+new Chart(wCtx,{type:'bar',data:{
+  labels:['Mon','Tue','Wed','Thu','Fri','Sat'],
+  datasets:[
+    {label:'Present',data:[210,225,218,230,220,186],backgroundColor:'rgba(0,212,170,0.8)',borderRadius:6},
+    {label:'Absent', data:[38,23,30,18,28,22],backgroundColor:'rgba(255,77,109,0.6)',borderRadius:6}
+  ]
+},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:'#8a8faa',boxWidth:10}}},scales:{x:{grid:{display:false},ticks:{color:'#8a8faa'}},y:{beginAtZero:true,grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#8a8faa'}}}}});
+</script>
+</body>
+</html>

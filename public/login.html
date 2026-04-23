@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Login — EduManage Pro</title>
+<meta name="description" content="Multi-Branch School Management System Login">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="login-page">
+  <div class="login-card">
+
+    <!-- Left Panel -->
+    <div class="login-left">
+      <div class="login-logo"><i class="fa-solid fa-graduation-cap"></i></div>
+      <h2>EduManage Pro</h2>
+      <p>Multi-Branch School Management System<br>Powering Modern Education</p>
+      <div style="margin-top:28px;position:relative;z-index:1;width:100%;">
+        <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:16px;text-align:left;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:13px;color:rgba(255,255,255,0.8);">
+            <i class="fa-solid fa-check-circle" style="color:#00d4aa;"></i> QR & Face Attendance
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:13px;color:rgba(255,255,255,0.8);">
+            <i class="fa-solid fa-check-circle" style="color:#00d4aa;"></i> Multi-Branch Management
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:13px;color:rgba(255,255,255,0.8);">
+            <i class="fa-solid fa-check-circle" style="color:#00d4aa;"></i> Fees, Payroll & Exams
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,0.8);">
+            <i class="fa-solid fa-check-circle" style="color:#00d4aa;"></i> Live Classes & Reports
+          </div>
+        </div>
+      </div>
+      <div class="social-links">
+        <a href="#" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="#" title="Twitter"><i class="fa-brands fa-twitter"></i></a>
+        <a href="#" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+        <a href="#" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+      </div>
+    </div>
+
+    <!-- Right Panel -->
+    <div class="login-right">
+      <h3>Welcome Back 👋</h3>
+      <p class="sub">Sign in to access your school dashboard</p>
+
+      <form id="loginForm" action="dashboard.html" method="GET">
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <div class="input-icon">
+            <i class="fa-regular fa-envelope"></i>
+            <input id="email" type="text" class="form-control" placeholder="admin@school.edu" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <div class="input-icon">
+            <i class="fa-solid fa-lock"></i>
+            <input id="password" type="password" class="form-control" placeholder="••••••••" required style="padding-right:42px;">
+            <i class="fa-regular fa-eye" id="togglePwd" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);cursor:pointer;color:var(--text-muted);left:auto;"></i>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+          <label style="display:flex;align-items:center;gap:7px;font-size:13px;cursor:pointer;color:var(--text-muted);">
+            <input type="checkbox" id="remember" style="accent-color:var(--accent);"> Remember me
+          </label>
+          <a href="#" style="font-size:13px;color:var(--accent);">Forgot password?</a>
+        </div>
+        <button type="submit" class="btn-login" id="loginBtn">
+          <i class="fa-solid fa-right-to-bracket"></i> Sign In
+        </button>
+      </form>
+
+      <div style="margin-top:28px;">
+        <p style="font-size:12px;color:var(--text-muted);margin-bottom:10px;text-align:center;">Quick demo access:</p>
+        <div class="demo-badges">
+          <span class="demo-badge" onclick="setDemo('superadmin@school.edu','admin123')"><i class="fa-solid fa-crown" style="color:var(--warning);"></i> Super Admin</span>
+          <span class="demo-badge" onclick="setDemo('admin@school.edu','admin123')"><i class="fa-solid fa-shield-halved" style="color:var(--accent);"></i> Branch Admin</span>
+          <span class="demo-badge" onclick="setDemo('teacher@school.edu','teacher123')"><i class="fa-solid fa-chalkboard-user" style="color:var(--accent2);"></i> Teacher</span>
+          <span class="demo-badge" onclick="setDemo('student@school.edu','student123')"><i class="fa-solid fa-user-graduate" style="color:var(--info);"></i> Student</span>
+          <span class="demo-badge" onclick="setDemo('parent@school.edu','parent123')"><i class="fa-solid fa-user-group" style="color:var(--success);"></i> Parent</span>
+        </div>
+      </div>
+
+      <div style="margin-top:32px;text-align:center;font-size:12px;color:var(--text-muted);">
+        &copy; 2026 EduManage Pro &mdash; Built with <i class="fa-solid fa-heart" style="color:var(--danger);"></i> by RamomCoder
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  document.getElementById('togglePwd').addEventListener('click', function(){
+    const p = document.getElementById('password');
+    const isText = p.type === 'text';
+    p.type = isText ? 'password' : 'text';
+    this.className = isText ? 'fa-regular fa-eye' : 'fa-regular fa-eye-slash';
+  });
+
+  function setDemo(email, pass){
+    document.getElementById('email').value = email;
+    document.getElementById('password').value = pass;
+  }
+
+  document.getElementById('loginForm').addEventListener('submit', function(e){
+    const btn = document.getElementById('loginBtn');
+    btn.innerHTML = '<i class="fa-solid fa-spinner spin"></i> Signing in...';
+    btn.disabled = true;
+  });
+</script>
+</body>
+</html>
